@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "E-commerce",
+    "slug": "E-commerce",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icons.jpg",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/icons.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons.jpg",
+        "backgroundColor": "#000000"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
