@@ -2,7 +2,7 @@ import React from "react";
 import { Colors } from '../../data/data';
 import { View,Text,StyleSheet,TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-const Inputs =({label , iconName, password ,error, onFocus = () =>{}, ...props }) => {
+const Inputs =({label , iconName, password ,error, onFocus = () =>{}, onChangeText, placeholder,value, jsLabel}) => {
     const[hidenPassword , setHidenPassword] = React.useState(password);
     const[isFocused , setisFocused] = React.useState(false);
     return(
@@ -17,10 +17,13 @@ const Inputs =({label , iconName, password ,error, onFocus = () =>{}, ...props }
                 setisFocused(true);
             }}
             onBlur = {()=> setisFocused (false)}
-            style={style.textInput} secureTextEntry ={hidenPassword}
-            {... props}
+            style={style.textInput} 
+            secureTextEntry ={jsLabel==="password"||jsLabel==="confirmPassword"}
+            onChangeText={onChangeText}
+            placeholder={placeholder}
+            value={value}
             />
-           {password && <Icon onPress={()=> setHidenPassword (!hidenPassword)} name={hidenPassword ? "eye" : "eye-slash"} style={style.iconEye} />}
+           {/* {password && <Icon onPress={()=> setHidenPassword (!hidenPassword)} name={hidenPassword ? "eye" : "eye-slash"} style={style.iconEye} />} */}
         </View>
         {error && <Text style={style.textError}>{error}</Text>}
     </View>

@@ -2,7 +2,7 @@
 // import * as firebase from "firebase/app";
 // import firebase from "firebase/compat/app";
 import firebase from 'firebase/compat/app';
-import { collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
@@ -13,29 +13,63 @@ import { myProducts, products } from './src/data/data';
 
 // Your web app's Firebase configuration
 //Ahmed Hany Config
-// const firebaseConfig = {
-//   apiKey: "AIzaSyDdLJDKiREMMwtEB1x0krgrJQAx3LGlaoc",
-//   authDomain: "cs303-proj.firebaseapp.com",
-//   projectId: "cs303-proj",
-//   storageBucket: "cs303-proj.appspot.com",
-//   messagingSenderId: "553702657372",
-//   appId: "1:553702657372:web:7e68bca22610a7502bc599"
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyDdLJDKiREMMwtEB1x0krgrJQAx3LGlaoc",
+  authDomain: "cs303-proj.firebaseapp.com",
+  projectId: "cs303-proj",
+  storageBucket: "cs303-proj.appspot.com",
+  messagingSenderId: "553702657372",
+  appId: "1:553702657372:web:7e68bca22610a7502bc599"
+};
 
 //Hassan Ahmed
-const firebaseConfig = {
-  apiKey: "AIzaSyA-atbyw-l92PBR_J6fVwBV4_8i0QPQGts",
-  authDomain: "react-native-auth-8fa1b.firebaseapp.com",
-  projectId: "react-native-auth-8fa1b",
-  storageBucket: "react-native-auth-8fa1b.appspot.com",
-  messagingSenderId: "971567626598",
-  appId: "1:971567626598:web:e0d7aff57494615174b0a7"
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyA-atbyw-l92PBR_J6fVwBV4_8i0QPQGts",
+//   authDomain: "react-native-auth-8fa1b.firebaseapp.com",
+//   projectId: "react-native-auth-8fa1b",
+//   storageBucket: "react-native-auth-8fa1b.appspot.com",
+//   messagingSenderId: "971567626598",
+//   appId: "1:971567626598:web:e0d7aff57494615174b0a7"
+// };
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db=getFirestore(app);
 
+const getAllDocs=(colName='books')=>{
+  const colRef=collection(db,colName);
+  getDocs(colRef)
+    .then((snapshot)=>{
+      let books=[];
+      snapshot.docs.forEach((doc)=>{
+        books.push({...doc.data(),id:doc.id} );
+      })
+      console.log(books);
+    })
+    .catch((err)=>{
+      console.log(err.message);
+    })
+}
+const addNewDoc=(colName='books',obj={title:'firebase'})=>{
+  addDoc(colName,obj)
+    .then(()=>{
+      console.log('addNewDoc success');
+    })
+    .catch(()=>{
+      console.log('addNewDoc fail');
+    })
+}
+const deleteOldDoc=(colName='books',id=null )=>{
+  if(!id) throw "attempted to delete a null id";
+  const docRef=doc(db,colName,id);
+  deleteDoc(docRef)
+    .then(()=>{
+      console.log('deleteOldDoc success')
+    })
+    .catch(()=>{
+      console.log('deleteOldDoc fail')
+    })
+}
 const setUser = async(db,collection,id,obj=null) => {
   if(!obj){
     throw "attempted to write an empty object";

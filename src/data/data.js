@@ -1,3 +1,223 @@
+export const appProducts = [
+  {
+    _id: "1",
+    name: "Lord Voldemort's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Voldemort1_Product.png?v=1639127048",
+    descrption:
+      "The wand of the Dark Lord, Lord Voldemort, is known for sharing its core with Harry Potter’s wand. This bespoke recreation is sculpted from resin and measures approximately 14.5” in length. Available in a sleek, collectable wand box with decorative paper overlay, the unique wand is ready for display anywhere in your home. Also makes the perfect gift for Slytherin fans or any aspiring witch or wizard! Please note Lord Voldemort’s Wand is a collectable replica and not intended for use as a toy.",
+    price: 1000,
+    quantity: 0,
+    rating: 4,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+    
+  },
+  {
+    _id: "2",
+    name: "Hermione Granger's Wooden Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Hermione2.png?v=1631878183",
+    descrption:
+      "Hermione Granger was best known for having a keen mind, a valiant heart, and the ability to excel in all her studies. She was an invaluable friend of Harry Potter and ally in the fight against Lord Voldemort. Made with unique vine wood and a dragon heartstring core, Hermione’s wand was acquired at Ollivanders shop in Diagon Alley. This exclusive signature wand has been hand-crafted and hand-painted, and is the first of its kind to be made from premium sustainably sourced wood to create the most realistic experience, with a superb and authentic look and feel. The flawless recreation of Hermione Granger's wooden wand measures approximately 38cm and is housed in a deluxe ribbon-lined Ollivanders display box. The luxury Harry Potter wand is sure to become the pride of any fan’s collection. Please note this wand is a collectable replica, and not a toy.",
+    price: 800,
+    quantity: 5,
+    rating: 3,
+    reviews:["The Elderwood Wand is a masterpiece! The craftsmanship is exceptional, and the wand feels incredibly powerful in my hand. The design, with its intricate carvings and dark finish, is absolutely stunning. It's the perfect wand for any witch or wizard who wants to command attention and showcase their strength. I highly recommend it!"]
+  },
+  {
+    _id: "3",
+    name: "Harry Potter's Wooden Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Harry2.png?v=1631878133",
+    descrption:
+      "One of the most famous wizards of all time, Harry Potter learnt on his 11th birthday that he was destined to attend Hogwarts School of Witchcraft and Wizardry. Harry acquired his powerful wand at Ollivanders shop in Diagon Alley which was made with unique holly wood with a phoenix feather core. This exclusive signature wand has been hand-crafted and hand-painted, and is the first of its kind to be made from premium sustainably sourced wood to create the most realistic experience, with a superb and authentic look and feel. The flawless recreation of Harry Potter's wooden wand measures approximately 36cm and is housed in a deluxe ribbon-lined Ollivanders display box. The luxury Harry Potter wand is sure to become the pride of any fan’s collection. Please note this wand is a collectable replica, and not a toy.",
+    price: 350,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "4",
+    name: "Sirius Black's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/siriusblack1.png?v=1641304045",
+    descrption:
+      "Sculpted from resin and measuring approximately 38.5cm in length, the unique wand is the perfect gift for any aspiring witch or wizard. The wand is available in a sleek, collectable wand box and features the character name with decorative paper overlay. Please note this wand is a collectable replica, and not a toy.",
+    price: 500,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "5",
+    name: "Professor Snape's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Snape1_Product.png?v=1639126161",
+    descrption:
+      "Add this high-quality wand replica to your Harry Potter collection with Professor Severus Snape's wand recreation, notorious Potions Master and also Head of Slytherin House. The unique wand has been sculpted from resin and measures at approximately 33cm in length. The wand is available in a sleek, collectible wand box and features the character name with decorative paper overlay. This wand is the perfect gift for any aspiring witch or wizard or a great addition to your Harry Potter collectibles. Please note this wand is a collectible replica, and not a toy.",
+    price: 900,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "6",
+    name: "Albus Dumbledore's Wand - Fantastic Beasts",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/FB_Dumbledore1.png?v=1641372965",
+    descrption:
+      "Add this high-quality replica Albus Dumbledore wand to your Harry Potter and Fantastic Beasts collectibles. In Fantastic Beasts: The Crimes of Grindelwald, Dumbledore is not yet in possession of the familiar Elder Wand. Instead, when we meet the 'young' Professor Dumbledore, his wand is a darker colour with intricate turns. Sculpted from resin and measuring approximately 15 3/4” long, the unique wand is the perfect gift for any aspiring witch or wizard. The wand is available in a sleek, blue collectible wand box for you to display anywhere in your home. Please note this Albus Dumbledore Fantastic Beast wand is a collectible replica, and not a toy.",
+    price: 420,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "7",
+    name: "Viktor Krum's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/1245259-1.png?v=1621858252",
+    descrption:
+      "Add this high-quality wand replica to your Harry Potter collection with this bespoke Viktor Krum wand recreation. Sculpted from resin and measuring at approximately 37cm long, the unique wand is the perfect gift for any aspiring witch or wizard. The wand is available in a sleek, collectible wand box for you to display anywhere in your home and features the Warner Bros. Studio Tour London - The Making of Harry Potter logo. Please note this wand is a collectible replica, and not a toy.",
+    price: 550,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "8",
+    name: "Neville Longbottom's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Neville1_Product.png?v=1639124169",
+    descrption:
+      "The wand of Neville Longbottom, loyal and brave Gryffindor. Wand measures approximately 13” in length. Neville Longbottom's wand is presented in a sleek, collectible wand box featuring the character name with decorative paper overlay. This authentic replica sculpted in resin is a fragile collectible wand. Not intended for use as a toy.",
+    price: 500,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "9",
+    name: "Seraphina Picquery's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/seraphina1.png?v=1641373978",
+    descrption:
+      "Add this high-quality Seraphina Picquery authentic wand recreation from Fantastic Beasts and Where to Find Them to your Harry Potter collection. The formidable and charismatic Seraphina Picquery served as President of the Magical Congress of the United States of America from 1920–1928. It was she who had to deal with the threat to the Statute of Secrecy caused by the escape of Newt’s magical creatures. Sculpted from resin and measures approximately 14\" long, Seraphina Picquery's wand is the perfect gift for any aspiring witch or wizard. The wand is available in a sleek, blue collectible wand box for you to display anywhere in your home. Please note this wand is a collectible replica and not a toy.",
+    price: 620,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "10",
+    name: "Death Eater's Wand - Swirl",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/darkmarkswirl1.png?v=1641306007",
+    descrption:
+      "Add this high-quality wand replica to your Harry Potter collection with this bespoke Death Eater Swirl collectible wand recreation. This Death Eater’s wand comes in a swirling design, similar to the Dark Mark. Sculpted from resin and measuring approximately 13 3/4” long, the unique wand is the perfect gift for any aspiring witch or wizard. The wand is available in a sleek, collectible wand box with decorative paper overlay for you to display anywhere in your home. This authentic replica sculpted in resin is a fragile collectible wand. Not intended for use as a toy.",
+    price: 150,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "11",
+    name: "Death Eater's Wand - Skull",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/deatheaterskull1.png?v=1641307451",
+    descrption:
+      "Add this high-quality wand replica to your Harry Potter collection with this bespoke Death Eater's wand recreation. Features a white skull handle with a spine running down to form the grip! Sculpted from resin and measuring approximately 13 3/4” long, the unique wand is the perfect gift for any aspiring witch or wizard. The wand is available in a sleek, collectible wand box with decorative paper overlay for you to display anywhere in your home. Please note this wand is a collectible replica and not a toy.",
+    price: 720,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "12",
+    name: "Gellert Grindelwald's Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Grindelwalds_Wand1.png?v=1647258955",
+    descrption:
+      "Gellert Grindelwald was a very powerful wizard who wished to end the International Statute of Secrecy and create a world order ruled by witches and wizards. He was a former friend of Albus Dumbledore and possessor of the Elder Wand, which he stole from Gregorovitch. This wand may look familiar to Harry Potter fans. This is the iconic Elder Wand from the Harry Potter film series. In the Fantastic Beasts: The Crimes of Grindelwald, Gellert is in possession of the wand. Sculpted from resin and measuring approximately 15 3/4” long, the unique wand is the perfect gift for any aspiring witch or wizard. Gellert Grindelwald's Wand is available in a sleek, blue collectible wand box for you to display anywhere in your home. Please note this wand is a collectible replica and not a toy.",
+    price: 820,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+  {
+    _id: "13",
+    name: "Professor Dumbledore's Wooden Wand",
+    image:
+      "https://cdn.shopify.com/s/files/1/0514/6332/3817/products/Dumbledore2.png?v=1631878237",
+    descrption:
+      "Best known as the Headmaster of Hogwarts School of Witchcraft and Wizardry, Albus Dumbledore was recognized as the master of the Elder Wand. As one of the three objects to make up the Deathly Hallows and crafted with the tail hair of a Thestral, this legendary wand is said to be the most powerful in existence. This exclusive signature wand has been hand-crafted and hand-painted and is the first of its kind to be made from premium sustainably sourced wood to create the most realistic experience, with a superb and authentic look and feel. The flawless recreation of Professor Dumbledore's wooden wand measures approximately 40cm and is housed in a deluxe ribbon-lined Ollivanders display box. The luxury Harry Potter wand is sure to become the pride of any fan’s collection. Please note this wand is a collectible replica, and not a toy.",
+    price: 630,
+    quantity: 5,
+    rating: 3,
+    reviews:[{
+text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
+date: "Jan 12 2022",
+reviewerName: "John Doe",
+rating: 4
+}]
+  },
+];
+
 export const myProducts = [
   {
     id: "001",
@@ -315,14 +535,14 @@ export const inputs= [
     label: "email",
     type: "text"
     },
-    {
-    label: "password",
-    type: "text"
-    },
+    // {
+    // label: "password",
+    // type: "text"
+    // },
     {
     label: "age",
     type: "text"
-    }
+    },
 ];
 const label2d = [
     ["firstName", "First Name"],

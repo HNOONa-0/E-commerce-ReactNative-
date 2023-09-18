@@ -14,9 +14,14 @@ import Rating from "../Rating";
 import Message from "./Message";
 import { Colors } from "../../data/data";
 
-export default function Review() {
-  const { rate, setRate } = useState("");
-  const { comment, setComment } = useState("");
+export default function Review(review ) {
+  // const { rate, setRate } = useState("");
+  // const { comment, setComment } = useState("");
+  const {rating,text,reviewerName,date}=review;
+  // console.log(review);
+  const onSubmit=()=>{
+
+  }
   return (
     <Box my={9}>
       <Heading bold fontSize={15} mb={2}>
@@ -34,18 +39,18 @@ export default function Review() {
 
       <Box p={3} bg={Colors.lavender} mt={5} rounded={5}>
         <Heading fontSize={15} color={Colors.black}>
-          John Doe
+          {reviewerName}
         </Heading>
         <Rating value={4} />
         <Text my={2} fontSize={11}>
-          Jan 12 2022
+          {date}
         </Text>
         <Message
           color={Colors.black}
           bg={Colors.white}
           size={12}
           children={
-            "I am happy to provide a review on a product, but I need to know which specific product you would like me to review. Please provide me with the name or some details about the product"
+            text
           }
         />
       </Box>
@@ -75,8 +80,8 @@ export default function Review() {
                 bg: Colors.lavender,
                 endIcon: <CheckIcon size={3} />,
               }}
-              selectedValue={rate}
-              >
+              selectedValue={rating}
+            >
               <Select.Item label="1 - Poor" value="1" />
               <Select.Item label="2 - Fair" value="2" />
               <Select.Item label="3 - Average" value="3" />
@@ -104,11 +109,11 @@ export default function Review() {
               _focus={{
                 bg: Colors.lavender,
               }}
-              value={comment}
+              value={"cancer"}
             />
           </FormControl>
 
-          <Buttone bg={Colors.main} color={Colors.white} childern={"Submit"}/>
+          <Buttone bg={Colors.main} color={Colors.white} childern={"Submit"} onPress={onSubmit}/>
           {/* If not logged in */}
           {/* <Message 
             color={Colors.white}

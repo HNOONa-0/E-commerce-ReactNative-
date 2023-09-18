@@ -8,38 +8,24 @@ import Loader from '../Components/Login&SignUp/Loader';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect } from "react";
 import { auth, db, setUser } from '../../firebase';
-import { getAuth , signInWithPopup, GoogleAuthProvider , onAuthStateChanged } from "firebase/auth";
+import { getAuth , signInWithPopup, GoogleAuthProvider , onAuthStateChanged, createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from 'firebase/firestore';
 
 
 
  const RegisterScreen = ({navigation})=> {
-
   
   const [inputs, setInputs] = useState({
-    firstName: "",
-    lastName:"",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
-    birthDate: "",
+    firstName: "ahmed",
+    lastName:"hani",
+    email: "1@email.com",
+    password: "123456",
+    confirmPassword: "123456",
+    phone: "01045631131",
+    birthDate: "2000/01/01",
   });
-  const [dateOfBirth,setDateOfBirth]=useState(new Date());
   const [errors, setErrors] = useState({});
   const [loading, setLoading] =useState(false);
-  const [showPiker, setShowPiker] = useState(false);
-
-  const [isAuth, setisAuth] =useState(false);
-
-
-  useEffect(() => {
-    const state = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace("buttom")
-      } 
-    });
-    return state
-}, [])
 
  
   const validate = () => {
@@ -89,24 +75,61 @@ import { getAuth , signInWithPopup, GoogleAuthProvider , onAuthStateChanged } fr
   };
   
   
-  const register = () => {
+  const register = async() => {
+    // console.log(inputs)
     const {email,password}=inputs;
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const ff=async()=>{
-          const user = userCredentials.user;
-          // alert("signed up succesfully with:"+user.email)
-          const res=await setUser(db,'test-users',auth.currentUser.uid,{
-            ...inputs,photoUrl:"",cart:[],orders:[],credit:5000.0
-          }).catch((error) => {console.log("SetUser: ", error)});
-          return res;
-        }
-        setisAuth(true);
-        ff().catch((error) => {console.log("ff 3: ", error)});; 
-      })
-      .catch(error => alert(error.message))
-      setLoading(true);
+    setLoading(true);
+    // const asyncRegister=async()=>{
+    //     try{
+    //       const res=await auth.createUserWithEmailAndPassword(email,password);
+    //       return res;
+    //     }
+    //     catch(err){
+    //       // alert(err);
+    //       setLoading(false);
+    //       throw err;
+    //     }
+    // }
+    // asyncRegister()
+    //   .then((res)=>{
+    //     setLoading(false);
+    //     console.log("success register");
+    //     navigation.navigate("buttom");
+    //   })
+    //   .catch((res)=>{
+    //     setLoading(false);
+    //     console.log("fail register");
+    //     console.log(res);
+    //   })
+
+    auth.createUserWithEmailAndPassword(email,password)
+    .then((res)=>{
+      const docRef=doc(db,'test-users',auth.currentUser.uid);
+      let newData={...inputs};
+
+      delete newData["password"];
+      delete newData["confirmPassword"];
+
+      newData.avatarUrl="https://hips.hearstapps.com/hmg-prod/images/cute-cat-photos-1593441022.jpg?crop=0.670xw:1.00xh;0.167xw,0&resize=640:*";
+      newData.credit=5000;
+      newData.cart=[];
+      newData.orders=[];
+
+      setDoc(docRef,newData)
+        .then(res=>{
+          setLoading(false);
+          console.log('succesfully added new user');
+          navigation.navigate("buttom");
+        })
+        .catch(res=>{
+          setLoading(false);
+          alert(res)        
+        })
+    })
+    .catch((res)=>{
+      setLoading(false);
+      alert(res)
+    })
   };
 
   const handleOnChange = (text, input) => {
@@ -117,6 +140,73 @@ import { getAuth , signInWithPopup, GoogleAuthProvider , onAuthStateChanged } fr
   const handleError = (text, input) => {
     setErrors((prevState) => ({ ...prevState, [input]: text }));
   };
+  const inputsArray = [
+    {
+      label: "First Name",
+      iconName: "user-circle",
+      placeholder: "Enter Your First Name",
+      onChangeText: (text) => handleOnChange(text, "firstName"),
+      onFocus: () => handleError(null, "firstName"),
+      error: errors.firstName,
+      jsLabel: "firstName"
+    },
+    {
+      label: "Last Name",
+      iconName: "user-circle",
+      placeholder: "Enter Your Last Name",
+      onChangeText: (text) => handleOnChange(text, "lastName"),
+      onFocus: () => handleError(null, "lastName"),
+      error: errors.lastName,
+      jsLabel: "lastName"
+    },
+    {
+      label: "Phone",
+      iconName: "phone-alt",
+      placeholder: "Enter Your Phone",
+      onChangeText: (text) => handleOnChange(text, "phone"),
+      onFocus: () => handleError(null, "phone"),
+      error: errors.phone,
+      jsLabel: "phone"
+    },
+    {
+      label: "Email",
+      iconName: "user",
+      placeholder: "Enter Your Email",
+      onChangeText: (text) => handleOnChange(text, "email"),
+      onFocus: () => handleError(null, "email"),
+      error: errors.email,
+      jsLabel: "email"
+    },
+    {
+      label: "Birth Date(yyyy/mm/dd)",
+      iconName: "user",
+      placeholder: "Enter Your Birth Date",
+      onChangeText: (text) => handleOnChange(text, "birthDate"),
+      onFocus: () => handleError(null, "birthDate"),
+      error: errors.birthDate,
+      jsLabel: "birthDate"
+    },
+    {
+      label: "Password",
+      iconName: "lock",
+      password: true,
+      placeholder: "Enter Your Password",
+      onChangeText: (text) => handleOnChange(text, "password"),
+      onFocus: () => handleError(null, "password"),
+      error: errors.password,
+      jsLabel: "password"
+    },
+    {
+      label: "Confirm Password",
+      iconName: "lock",
+      password: true,
+      placeholder: "Confirm Your Password",
+      onChangeText: (text) => handleOnChange(text, "confirmPassword"),
+      onFocus: () => handleError(null, "confirmPassword"),
+      error: errors.confirmPassword,
+      jsLabel: "confirmPassword"
+    }
+  ];
 
   return (
     <Box flex={1} bg={Colors.white}>
@@ -140,119 +230,25 @@ import { getAuth , signInWithPopup, GoogleAuthProvider , onAuthStateChanged } fr
       <ScrollView showsVerticalScrollIndicator={false}>
       <Heading color={Colors.underline}>Register</Heading>
       <VStack space={2} pt={2}>
-
-      <Inputs label="First Name"
-            iconName="user-circle"
-            placeholder=" Enter Your First Name"
-            onChangeText={(text) => handleOnChange(text, "firstName")}
-            onFocus={() => handleError(null, "firstName")}
-            error={errors.firstName}
-          />
-        <Inputs label="Last Name"
-            iconName="user-circle"
-            placeholder=" Enter Your First Name"
-            onChangeText={(text) => handleOnChange(text, "lastName")}
-            onFocus={() => handleError(null, "lastName")}
-            error={errors.lastName}
-          />
-
-          <Inputs label="Phone"
-            iconName="phone-alt"
-            placeholder=" Enter Your Phone"
-            onChangeText={(text) => handleOnChange(text, "phone")}
-            onFocus={() => handleError(null, "phone")}
-            error={errors.phone}
-          />
-
-          <Inputs
-            label="Email"
-            iconName="user"
-            placeholder=" Enter Your Email"
-            onChangeText={(text) => handleOnChange(text, "email")}
-            onFocus={() => handleError(null, "email")}
-            error={errors.email}
-          />
-
-         <View>
-            {/* {showPiker && ( <DateTimePicker mode="date" display="spinner" value={dateOfBirth} onConfirm={onDateChange} />)}
-            <Pressable onPress={toggleDatepiker}>
-              <Inputs label="Date Of Birthday" iconName="user" placeholder="Mar 21 2002" value={inputs.birthDate} editable={false} />
-            </Pressable> */}
-            <Inputs
-            label="Birth Date(yyyy/mm/dd)"
-            iconName="user"
-            placeholder="Enter Your Birth Date"
-            onChangeText={(text) => handleOnChange(text, "birthDate")}
-            onFocus={() => handleError(null, "birthDate")}
-            error={errors.birthDate}
-          />
-         </View>
-
-          <Inputs
-            label="Password"
-            iconName="lock"
-            password
-            placeholder=" Enter Your Password"
-            onChangeText={(text) => handleOnChange(text, "password")}
-            onFocus={() => handleError(null, "password")}
-            error={errors.password}
-          />
-
-          <Inputs
-            label="Confirm Password"
-            iconName="lock"
-            password
-            placeholder=" Confirm Your Password"
-            onChangeText={(text) => handleOnChange(text, "confirmPassword")}
-            onFocus={() => handleError(null, "confirmPassword")}
-            error={errors.confirmPassword}
-          />
-
-      {/* <Input
-        InputLeftElement={<AntDesign name="user" size={24} color={Colors.white} />}
-          variant={"underlined"}
-          placeholder="Amr Sameeh"
-          w={"80%"}
-          pl={2}
-          color={Colors.white}
-          borderBottomColor={Colors.deepestGray}
-
-        />
-        <Input
-        InputLeftElement={<MaterialIcons name="email" size={20} color={Colors.white} /> }
-          variant={"underlined"}
-          placeholder="Email@Example.com"
-          w={"80%"}
-          pl={2}
-          color={Colors.white}
-          borderBottomColor={Colors.deepestGray}
-
-        />
-        <Input
-        label="Password"
-        InputLeftElement={<Ionicons name="eye" size={24} color={Colors.white}/>}
-          variant={"underlined"}
-          placeholder= " *********"
-          w={"80%"}
-          type="password"
-          color={Colors.white}
-          borderBottomColor={Colors.deepestGray}
-        /> 
-        <Input
-        label=" ConfirmPassword"
-        InputLeftElement={<Ionicons name="eye" size={24} color={Colors.white}/>}
-          variant={"underlined"}
-          placeholder= " *********"
-          w={"80%"}
-          type="password"
-          color={Colors.white}
-          borderBottomColor={Colors.deepestGray}
-        />  */}
+        {inputsArray.map((eachInputs)=>{
+          return (
+            <Inputs 
+              key={eachInputs.label}
+              label={eachInputs.label}
+              iconName={eachInputs.iconName}
+              placeholder={eachInputs.placeholder}
+              onChangeText={eachInputs.onChangeText}
+              onFocus={eachInputs.onFocus}
+              error={eachInputs.error}
+              value={inputs[eachInputs.jsLabel]}
+              jsLabel={eachInputs.jsLabel}
+            />      
+          )
+        })}
+      
       </VStack>
       </ScrollView>
-      <Buttone my={30} w="10%" rounded={50} bg={Colors.white} onPress={()=>{
-        validate();
-      }} childern={"SIGN UP"} mt={5} />
+      <Buttone my={30} w="10%" rounded={50} bg={Colors.white} onPress={validate} childern={"SIGN UP"} mt={5} />
       <Pressable mt={4} onPress={()=>{navigation.navigate('Login');}} >
         <Text color={Colors.lavender}>LOG IN</Text>
       </Pressable>

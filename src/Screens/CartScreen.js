@@ -1,4 +1,4 @@
-import { Box, Center, Text, ScrollView, Button, HStack } from "native-base";
+import { Box, Center, Text, ScrollView, Button, HStack, View } from "native-base";
 import CartItem from "../Components/ShoppingCart/CartItems";
 import CartEmpty from "../Components/ShoppingCart/CartEmpty";
 import { React } from "react";
@@ -28,21 +28,24 @@ function removeFromCart(cart,product) {
   return cart;
 }
 
-function CartScreen() {
+function CartScreen({userData,setLocalUserData}) {
   const navegation = useNavigation();
-  const[cart,setCart]=useState([]);
+  const[cart,setCart]=useState(userData.cart);
 
-  useEffect(() => {
-    if(!auth.currentUser) return;
+  // useEffect(() => {
+  //   if(!auth.currentUser) return;
   
-    const docRef=doc(db, 'test-users', auth.currentUser.uid);
+  //   const docRef=doc(db, 'test-users', auth.currentUser.uid);
 
-    const unsubscribe = onSnapshot(docRef,(doc)=>{
-      const res=doc.data();
-      setCart(res.cart);
-    })
-    return () => unsubscribe();
-  }, [auth.currentUser]);
+  //   const unsubscribe = onSnapshot(docRef,(doc)=>{
+  //     const res=doc.data();
+  //     setCart(res.cart);
+  //   })
+  //   return () => unsubscribe();
+  // }, [auth.currentUser]);
+  useEffect(() => {
+    setCart(userData.cart);
+  }, [userData]);
   let price=0;
   for(let i=0;i<cart.length;i++)price+=(cart[i].quantity*cart[i].price);
 
@@ -56,26 +59,28 @@ function CartScreen() {
       </Center>
 
       {/* if cart empty*/}
-      {/* <CartEmpty/>  */}
-
-      <ScrollView showsVerticalScrollIndicator={false}>
+      {cart.length===0?
+        <CartEmpty/>:
         <CartItem 
           cart={cart}
           setCart={setCart}
-        />
+          userData={userData}
+          setLocalUserData={setLocalUserData}
+        /> 
+      }
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Center mt={2}>
           <HStack
             rounded={50}
             justifyContent="space-between"
             bg={Colors.white}
             shadow={2}
-            w="90%"
+            w="80%"
             pl={5}
             h={45}
             alignItems="center"
           >
             <Text pl={5}>Total </Text>
-
             <Button
               px={10}
               h={45}
@@ -92,13 +97,19 @@ function CartScreen() {
               {price+"$"}
             </Button>
           </HStack>
-          <Buttone
-            bg={Colors.black}
-            color={Colors.white}
-            mt={100}
-            childern={"CheckOut"}
-            onPress={() => navegation.navigate("Shipping")}
-          />
+          <View
+            w="60%"
+          >
+            <Buttone
+              bg={Colors.black}
+              color={Colors.white}
+              mt={50}
+              // childern={userData.credit<price?"Not enough credit":"CheckOut"}
+              childern={"CheckOut"}
+              onPress={() => navegation.navigate("Shipping",{userData,setLocalUserData} ) }
+              // isDisabled={price===0||userData.credit<price?true:false}
+            />
+          </View>
         </Center>
       </ScrollView>
     </Box>

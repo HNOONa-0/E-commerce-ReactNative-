@@ -13,46 +13,15 @@ const provider = new GoogleAuthProvider();
 
 function LoginScreen({navigation}) {
   const [inputs, setInputs] = useState({
-    email: "test@a.com",
+    email: "z@a.com",
     password: "123456",
   });
+  
   const [errors, setErrors] = useState({});
   const [loading, setLoading] =useState(false);
 
-
-
-  useEffect(() => {
-    const state = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace("buttom")
-      } 
-    });
-    return state
-  }, [])
-
   const handleOnChange = (text, input) => {
     setInputs((prevState) => ({ ...prevState, [input]: text }));
-  };
-  const GoogleAuth = () => {
-    signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
   };
 
   const validate = async () => {
@@ -77,21 +46,41 @@ function LoginScreen({navigation}) {
 
   const handleError = (text, input) => {
     setErrors((prevState) => ({ ...prevState, [input]: text }));
-
   };
 
   const handleLogin = () => {
     const {email,password}=inputs;
-    auth.signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert(errorMessage)
-    });
-    
+    setLoading(true);
+    const asyncLogin=async()=>{
+      try{
+        const res=await auth.signInWithEmailAndPassword(email, password);
+      }
+      catch(err){
+        // alert(err);
+        throw err;
+      }
+    }
+    asyncLogin()
+      .then((res)=>{
+        console.log("success logg in");
+        setLoading(false);
+        navigation.replace("buttom");
+      })
+      .catch((res)=>{
+        setLoading(false);
+        console.log("fail log in");
+      })
+    // auth.signInWithEmailAndPassword(email, password)
+    // .then((userCredential) => {
+    //   const user = userCredential.user;
+    //   // navigate to somewhere
+    //   navigation.replace("buttom");
+    // })
+    // .catch((error) => {
+    //   const errorCode = error.code;
+    //   const errorMessage = error.message;
+    //   alert(errorMessage)
+    // });
   }
 
   return (
@@ -134,44 +123,23 @@ function LoginScreen({navigation}) {
               onFocus={() => handleError(null, "password")}
               value={inputs.password}
               error={errors.password}
+              jsLabel={"password"}
             />
-          {/* ُEmail */}
-          {/* <Inputs
-            InputLeftElement={<MaterialIcons name="email" size={20} color={Colors.white} />}
-            variant={"underlined"}
-            placeholder="Email@Example.com"
-            w={"80%"}
-            pl={2}
-            color={Colors.white}
-            borderBottomColor={Colors.deepestGray}
-            onChangeText={(text) => handleOnChange(text, "email")}
-            onFocus={() => handleError(null, "email")}
-            error={errors.email}
-
-          /> */}
-          {/* Password */}
-          {/* <Inputs
-            InputLeftElement={<Ionicons name="eye" size={24} color={Colors.white} />}
-            variant={"underlined"}
-            placeholder=" *********"
-            w={"80%"}
-            type="password"
-            color={Colors.white}
-            borderBottomColor={Colors.deepestGray}
-            onChangeText={(text) => handleOnChange(text, "password")}
-            onFocus={() => handleError(null, "password")}
-            error={errors.password}
-          /> */}
         </VStack>
-        <Buttone
-          my={30} rounded={50} bg={Colors.lavender} onPress={validate} childern={"SIGN IN"} mt={5} />
           <Buttone
-          my={30} rounded={50} bg={Colors.lavender} onPress={GoogleAuth} childern={"SIGN IN With Google"} mt={5} />
+            my={30} rounded={50} bg={Colors.lavender} onPress={()=>{
+              // console.log("hello world");
+              validate();
+            }} childern={"SIGN IN"} mt={5}
+          />
+          {/* <Buttone
+            my={30} rounded={50} bg={Colors.lavender} onPress={GoogleAuth} childern={"SIGN IN With Google"} mt={5}
+          /> */}
         <Pressable mt={4} onPress={()=>{navigation.navigate('Register');}}>
-          <Text color={Colors.lightblack}>SIGN UP</Text>
+          <Text color={Colors.white}>SIGN UP</Text>
         </Pressable>
         <Pressable mt={4} onPress={()=>{navigation.navigate('ForgetPassword');}}>
-          <Text color={Colors.lightblack}> Forget Password ? </Text>
+          <Text color={Colors.white}>Forgot Password?</Text>
         </Pressable>
       </Box>
     </Box>

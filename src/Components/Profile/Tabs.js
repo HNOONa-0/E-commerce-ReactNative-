@@ -13,7 +13,21 @@ const renderScene = SceneMap({
     second:Orders
 })
 
-export default function Tabs() {
+export default function Tabs({userData,setLocalUserData}) {
+    // console.log("profile");
+    // console.log(userData);
+    // console.log(setLocalUserData);
+
+    const renderScene=({route} )=>{
+        switch (route.key) {
+            case 'first':
+              return <Profile userData={userData} setLocalUserData={setLocalUserData} />;
+            case 'second':
+              return <Orders userData={userData} setLocalUserData={setLocalUserData}/>;
+            default:
+              return null;
+          }
+    }
 
     const layout = useWindowDimensions()
     const [index,setIndex] = useState(0)
@@ -40,11 +54,11 @@ export default function Tabs() {
 
     return (
         <TabView 
-        navigationState={{index,routes}}
-        renderScene= {renderScene}
-        // set ui of profile and orders index
-        onIndexChange= {setIndex} initialLayout={{width:layout.width}}
-        renderTabBar={renderTabsBar}
+            navigationState={{index,routes}}
+            renderScene= {renderScene}
+            // set ui of profile and orders index
+            onIndexChange= {setIndex} initialLayout={{width:layout.width}}
+            renderTabBar={renderTabsBar}
         />
     );
 }

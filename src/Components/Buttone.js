@@ -1,7 +1,7 @@
 import { Button } from "native-base";
 import { React } from "react";
 
-function Buttone({ mt, bg, color, childern, onPress }) {
+function Buttone({ mt, bg, color, childern, onPress,isDisabled}) {
   return (
     <Button
       w={"full"}
@@ -9,6 +9,7 @@ function Buttone({ mt, bg, color, childern, onPress }) {
       mt={mt}
       rounded="full"
       bg={bg}
+      isDisabled={isDisabled}
       _text={{ color: color, fontWeight: "bold" }}
       _pressed={{ bg: bg }}
         onPress={onPress}

@@ -9,27 +9,14 @@ import { useState } from "react";
 import { auth, db } from "../../../firebase";
 import { doc, onSnapshot } from "firebase/firestore";
 
-function HomeSearch({searchText,setSearchText}) {
-  const[cart,setCart]=useState(0);
-  // works
+function HomeSearch({searchText,setSearchText,userData,setLocalUserData}) {
+  const[cart,setCart]=useState(userData.cart);
   const navegation = useNavigation();
-  useEffect(() => {
-    if(!auth.currentUser) return;
-  
-    const docRef=doc(db, 'test-users', auth.currentUser.uid);
-
-    const unsubscribe = onSnapshot(docRef,(doc)=>{
-      const res=doc.data();
-      setCart(res.cart);
-    })
-    return () => unsubscribe();
-  }, [auth.currentUser]);
   let sum=0;
-  
-    
-    for(let i=0;i<cart.length;i++)sum+=(cart[i].quantity);
-  
-  
+  for(let i=0;i<cart.length;i++)sum+=(cart[i].quantity);
+  useEffect(() => {
+    setCart(userData.cart);
+  }, [userData]);
   return (
     <HStack
       space={3}

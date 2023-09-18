@@ -17,6 +17,7 @@ import { Colors } from "../../data/data";
 import { useState } from "react";
 import { useEffect } from "react";
 import { auth, db, getUser, updateUser } from "../../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 function removeFromCart(cart,product) {
   // Find the index of the product in the cart
@@ -33,7 +34,7 @@ function removeFromCart(cart,product) {
   }
   return newCart; // Return the new array
 }
-const CartItem = ({cart,setCart}) => {
+const CartItem = ({cart,setCart,userData, setLocalUserData}) => {
   const products=cart;
 
   const Swiper = () => (
@@ -93,7 +94,27 @@ const CartItem = ({cart,setCart}) => {
       </Box>
     </Pressable>
   );
-
+  const asyncRemoveFromCart=async(data)=>{
+    try{
+      const docRef=doc(db,'test-users',auth.currentUser.uid);
+      const newCart=removeFromCart([...cart],data.item);
+      // console.log(newCart);
+      const res=await updateDoc(docRef,{cart:newCart} );
+      return res;
+    }catch(err){
+      throw err;
+    }
+  }
+  const updateData=(data)=>{
+    asyncRemoveFromCart(data)
+        .then((res)=>{
+            console.log("succesfully removed from cart");
+            setLocalUserData();
+        })
+        .catch((err)=>{
+            alert(err);
+        })
+  }
   const renderHiddenItems = (data) => (
     <Pressable
       w={50}
@@ -103,15 +124,7 @@ const CartItem = ({cart,setCart}) => {
       ml="auto"
       justifyContent="center"
       bg={Colors.red}
-      onPress={()=>{
-        const ff=async()=>{
-          const userData=await getUser(db,'test-users',auth.currentUser.uid).catch(error => { console.log("getUser: ", error) });
-          const newCart=removeFromCart([...cart],data.item );
-          const res=await updateUser(db,'test-users',auth.currentUser.uid,{...userData,cart:newCart } ).catch(error => { console.log("updateUser: ", error) });
-          setCart(newCart);
-        }
-        ff().catch((error) => {console.log("ff 2: ", error)});;
-      }}
+      onPress={()=>updateData(data)}
     >
       <Center alignItems="center" space={2}>
         <FontAwesome5 name="trash" size={30} color={Colors.white} />

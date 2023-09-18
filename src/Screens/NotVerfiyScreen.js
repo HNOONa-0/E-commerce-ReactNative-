@@ -7,14 +7,6 @@ import { useEffect } from "react";
 import { auth } from "../../firebase";
 
 function NotVerfityScreen({ navigation }) {
-  useEffect(() => {
-    const state = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigation.replace("buttom");
-      }
-    });
-    return state;
-  }, []);
 
   return (
     <Box flex={1} bg={Colors.main} safeAreaTop>
@@ -26,9 +18,9 @@ function NotVerfityScreen({ navigation }) {
         />
       </Center>
       <VStack space={6} px={5} alignItems={"center"}>
-        <Heading color={Colors.lavender}>Welcome In Our App.</Heading>
+        <Heading color={Colors.lavender}>Welcome to our app.</Heading>
         <Text color={Colors.lavender} fontSize={20}>
-          You Have To Prove You're One of Us First.
+          You have to prove you are one of us first.
         </Text>
         <Buttone
           bg={Colors.white}

@@ -7,7 +7,7 @@ import OrderItem from '../Components/PlaceOrder/OrderItem';
 import PlaceOrderModel from '../Components/PlaceOrder/placeOrderModel';
 
 const PlaceOrderScreen=({route})=>{
-  const product = route.params;
+  const {userData,setLocalUserData}=route.params;
   return (
     <NativeBaseProvider>
       <Box
