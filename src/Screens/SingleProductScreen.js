@@ -16,6 +16,7 @@ import Rating from "../Components/Rating";
 import Review from './../Components/SingleProduct/Review';
 import { auth, db, getUser, updateUser } from "../../firebase";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import WriteReview from "../Components/SingleProduct/WriteReview";
 
 function addToCart(cart,product,buyAm) {
   // Check if the product already exists in the cart
@@ -41,6 +42,7 @@ function SingleProductScreen({route}) {
   const {product,userData,setLocalUserData}=route.params;
   const[buyAm,setBuyAm] = useState(0);
   const[cart,setCart]=useState(userData.cart);
+  // console.log(product.reviews.length);
   // const navegation = useNavigation();
   // console.log(product.reviews);
   // console.log(buyAm);
@@ -156,9 +158,20 @@ function SingleProductScreen({route}) {
           ADD TO CART
         </Button>
         {/* <Review {...product.reviews[0]}/> */}
-        {product.reviews.map((eachReview,i)=>{
-          return <Review key={i} rating={eachReview.rating} text={eachReview.text} reviewerName={eachReview.reviewerName} date={eachReview.date}/>
-        })}
+        <Box my={9}>
+        <Heading bold fontSize={15} mb={2}>
+          Reviews
+        </Heading>
+          {product.reviews.map((eachReview,i)=>{
+            return(
+              <Review 
+                key={i} rating={eachReview.rating} text={eachReview.text}
+                reviewerName={eachReview.reviewerName} date={eachReview.date}
+              />
+            )
+          })}
+        </Box>
+        <WriteReview product={product} userData={userData} setLocalUserData={setLocalUserData}/>
       </ScrollView>
     </Box>
   );

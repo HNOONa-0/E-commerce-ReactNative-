@@ -43,19 +43,24 @@ function CartScreen({userData,setLocalUserData}) {
   //   })
   //   return () => unsubscribe();
   // }, [auth.currentUser]);
+  const onCheckout=()=>{
+    // const docRef=doc(db,'test-users',auth.currentUser.uid);
+    // const newCart=addToCart([...cart],product,buyAm);
+    // console.log(newCart);
+    // const res=await updateDoc(docRef,{cart:newCart} );
+  }
   useEffect(() => {
     setCart(userData.cart);
   }, [userData]);
   let price=0;
   for(let i=0;i<cart.length;i++)price+=(cart[i].quantity*cart[i].price);
-
   return (
     <Box flex={1} safeAreaTop bg={Colors.lavender}>
       {/* The Header Of The Page */}
       <Center w="full" py={5}>
-        <Text color={Colors.black} fontSize={20} bold>
+        {/* <Text color={Colors.black} fontSize={20} bold>
           Cart
-        </Text>
+        </Text> */}
       </Center>
 
       {/* if cart empty*/}
@@ -97,6 +102,34 @@ function CartScreen({userData,setLocalUserData}) {
               {price+"$"}
             </Button>
           </HStack>
+          <HStack
+            mt={2}
+            rounded={50}
+            justifyContent="space-between"
+            bg={Colors.white}
+            w="80%"
+            pl={5}
+            h={45}
+            alignItems="center"
+          >
+            <Text pl={5}>Credit</Text>
+            <Button
+              px={10}
+              h={45}
+              rounded={50}
+              backgroundColor={userData.credit>price?"green.400":"red.400"}
+              // bg={Colors.main} 
+              _text={{
+                color: Colors.white,
+                fontWeight: "semibold",
+              }}
+              _pressed={{
+                bg: Colors.main,
+              }}
+            >
+              {userData.credit+"$"}
+            </Button>
+          </HStack>
           <View
             w="60%"
           >
@@ -104,10 +137,11 @@ function CartScreen({userData,setLocalUserData}) {
               bg={Colors.black}
               color={Colors.white}
               mt={50}
-              // childern={userData.credit<price?"Not enough credit":"CheckOut"}
               childern={"CheckOut"}
-              onPress={() => navegation.navigate("Shipping",{userData,setLocalUserData} ) }
+              // childern={userData.credit<price?"Not enough credit":"CheckOut"}
               // isDisabled={price===0||userData.credit<price?true:false}
+              // onPress={() => navegation.navigate("Shipping",{userData,setLocalUserData} )}
+              onPress={() => onCheckout()}
             />
           </View>
         </Center>

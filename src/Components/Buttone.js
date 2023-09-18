@@ -1,12 +1,13 @@
 import { Button } from "native-base";
 import { React } from "react";
 
-function Buttone({ mt, bg, color, childern, onPress,isDisabled}) {
+function Buttone({  mb, mt, bg, color, childern, onPress,isDisabled}) {
   return (
     <Button
       w={"full"}
       h={55}
       mt={mt}
+      mb={mb}
       rounded="full"
       bg={bg}
       isDisabled={isDisabled}
