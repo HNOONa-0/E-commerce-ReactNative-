@@ -9,7 +9,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { useEffect } from "react";
 import { useState } from "react";
 import { auth, db } from "../../firebase";
-import { doc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { getNowDate } from "../data/other";
 
 function removeFromCart(cart,product) {
   // Find the index of the product in the cart
@@ -28,32 +29,76 @@ function removeFromCart(cart,product) {
   return cart;
 }
 
-function CartScreen({userData,setLocalUserData}) {
+function CartScreen({userData,setLocalUserData,updateProducts}) {
   const navegation = useNavigation();
   const[cart,setCart]=useState(userData.cart);
+  const[loading,setLoading]=useState(false);
 
-  // useEffect(() => {
-  //   if(!auth.currentUser) return;
-  
-  //   const docRef=doc(db, 'test-users', auth.currentUser.uid);
+  let price=0;
+  for(let i=0;i<cart.length;i++)price+=(cart[i].quantity*cart[i].price);
 
-  //   const unsubscribe = onSnapshot(docRef,(doc)=>{
-  //     const res=doc.data();
-  //     setCart(res.cart);
-  //   })
-  //   return () => unsubscribe();
-  // }, [auth.currentUser]);
-  const onCheckout=()=>{
-    // const docRef=doc(db,'test-users',auth.currentUser.uid);
-    // const newCart=addToCart([...cart],product,buyAm);
-    // console.log(newCart);
-    // const res=await updateDoc(docRef,{cart:newCart} );
+  const asyncUpdateProducts=async()=>{
+    const productDocRefArr=[];
+    for(let i=0;i<cart.length;i++) productDocRefArr.push(doc(db,'products',cart[i].id) );
+
+    try{
+      for(let i=0;i<cart.length;i++){
+        const res=await updateDoc(productDocRefArr[i], {quantity:cart[i].maxQuantity-cart[i].quantity} );
+      }  
+    }
+    catch(err){
+      throw err;
+    }
+    return true;
+  }
+  const onCheckout=async()=>{
+    // this should be a transaction, this needs alot of work
+    setLoading(true);
+
+    const userDocRef=doc(db,'test-users',auth.currentUser.uid);
+    const cartForOrder=[...cart];
+    for(let i=0;i<cartForOrder.length;i++) delete cartForOrder[i].maxQuantity;
+    const ok=true;
+    
+    updateDoc(userDocRef, {
+      cart:[]
+      ,orders:[{cart:cartForOrder,date:getNowDate(),debit:Math.min(0,userData.credit-price)} ]
+      ,credit:userData.credit-price} )
+      .then(res=>{
+        console.log("success add to order")
+        setLocalUserData();
+      })
+      .catch(err=>{
+        alert(err);
+        ok=false;
+      })
+    if(!ok){
+      setLoading(false);
+      return;
+    }
+
+
+    const productDocRefArr=[];
+    for(let i=0;i<cart.length;i++) productDocRefArr.push(doc(db,'products',cart[i].id) );
+
+    const map=new Map();
+    for(let i=0;i<cart.length;i++)map.set(cart[i].productId,{quantity:cart[i].maxQuantity-cart[i].quantity} )
+
+    asyncUpdateProducts()
+      .then(res=>{
+        console.log("succesfully update all products");
+        updateProducts(map);
+        setLoading(false);
+      })
+      .catch(err=>{
+        // something went wrong, we need to undo previous transaction, there must be a better way to do this
+        alert(err);
+        setLoading(false);
+      })
   }
   useEffect(() => {
     setCart(userData.cart);
   }, [userData]);
-  let price=0;
-  for(let i=0;i<cart.length;i++)price+=(cart[i].quantity*cart[i].price);
   return (
     <Box flex={1} safeAreaTop bg={Colors.lavender}>
       {/* The Header Of The Page */}
@@ -142,6 +187,7 @@ function CartScreen({userData,setLocalUserData}) {
               // isDisabled={price===0||userData.credit<price?true:false}
               // onPress={() => navegation.navigate("Shipping",{userData,setLocalUserData} )}
               onPress={() => onCheckout()}
+              isDisabled={cart.length===0||loading}
             />
           </View>
         </Center>

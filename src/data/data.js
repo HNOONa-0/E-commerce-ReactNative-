@@ -9,12 +9,7 @@ export const appProducts = [
     price: 1000,
     quantity: 0,
     rating: 4,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
     
   },
   {
@@ -27,7 +22,7 @@ rating: 4
     price: 800,
     quantity: 5,
     rating: 3,
-    reviews:["The Elderwood Wand is a masterpiece! The craftsmanship is exceptional, and the wand feels incredibly powerful in my hand. The design, with its intricate carvings and dark finish, is absolutely stunning. It's the perfect wand for any witch or wizard who wants to command attention and showcase their strength. I highly recommend it!"]
+    reviews:[]
   },
   {
     _id: "3",
@@ -39,12 +34,7 @@ rating: 4
     price: 350,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "4",
@@ -56,12 +46,7 @@ rating: 4
     price: 500,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "5",
@@ -73,12 +58,7 @@ rating: 4
     price: 900,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "6",
@@ -90,12 +70,7 @@ rating: 4
     price: 420,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "7",
@@ -107,12 +82,7 @@ rating: 4
     price: 550,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "8",
@@ -124,12 +94,7 @@ rating: 4
     price: 500,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "9",
@@ -141,12 +106,7 @@ rating: 4
     price: 620,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "10",
@@ -158,12 +118,7 @@ rating: 4
     price: 150,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "11",
@@ -175,12 +130,7 @@ rating: 4
     price: 720,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "12",
@@ -192,12 +142,7 @@ rating: 4
     price: 820,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
   {
     _id: "13",
@@ -209,12 +154,7 @@ rating: 4
     price: 630,
     quantity: 5,
     rating: 3,
-    reviews:[{
-text: "Its dark and twisted appearance reflects its nature. The wand demands respect and concentration from its wielder, rewarding them with powerful and unpredictable magic. It's not a wand for the faint-hearted, but for those who dare to explore the depths of magic's possibilities, it will be an intriguing and rewarding companion.",
-date: "Jan 12 2022",
-reviewerName: "John Doe",
-rating: 4
-}]
+    reviews:[]
   },
 ];
 

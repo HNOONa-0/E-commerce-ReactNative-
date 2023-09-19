@@ -36,6 +36,7 @@ function removeFromCart(cart,product) {
 }
 const CartItem = ({cart,setCart,userData, setLocalUserData}) => {
   const products=cart;
+  const[loading,setLoading]=useState(false);
 
   const Swiper = () => (
     <SwipeListView
@@ -106,13 +107,16 @@ const CartItem = ({cart,setCart,userData, setLocalUserData}) => {
     }
   }
   const updateData=(data)=>{
+    setLoading(true);
     asyncRemoveFromCart(data)
         .then((res)=>{
             console.log("succesfully removed from cart");
             setLocalUserData();
+            setLoading(false);
         })
         .catch((err)=>{
             alert(err);
+            setLoading(false);
         })
   }
   const renderHiddenItems = (data) => (
@@ -125,6 +129,7 @@ const CartItem = ({cart,setCart,userData, setLocalUserData}) => {
       justifyContent="center"
       bg={Colors.red}
       onPress={()=>updateData(data)}
+      isDisabled={loading}
     >
       <Center alignItems="center" space={2}>
         <FontAwesome5 name="trash" size={30} color={Colors.white} />

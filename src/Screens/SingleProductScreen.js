@@ -31,32 +31,24 @@ function addToCart(cart,product,buyAm) {
   } else {
     // If the product does not exist, add it to the cart
     if(buyAm>product.quantity)
-    throw `The total quantity cannot to be bought cannot exceed ${product.quantity}, you were trying to buy ${buyAm}`;
-    cart.push({...product,quantity:buyAm } );
+      throw `The total quantity cannot to be bought cannot exceed ${product.quantity}, you were trying to buy ${buyAm}`;
+    cart.push({...product,quantity:buyAm,maxQuantity:product.quantity} );
   }
   return cart;
 }
 
 // Function to remove a product from the cart
 function SingleProductScreen({route}) {
-  const {product,userData,setLocalUserData}=route.params;
+  const {product,userData,setLocalUserData,updateProducts}=route.params;
   const[buyAm,setBuyAm] = useState(0);
   const[cart,setCart]=useState(userData.cart);
+  const[loading,setLoading]=useState(false);
+  // console.log(cart);
   // console.log(product.reviews.length);
   // const navegation = useNavigation();
   // console.log(product.reviews);
   // console.log(buyAm);
 
-  // useEffect(() => {
-  //   if(!auth.currentUser) return;
-  //   const docRef=doc(db, 'test-users', auth.currentUser.uid);
-    
-  //   const unsubscribe = onSnapshot(docRef,(doc)=>{
-  //     const res=doc.data();
-  //     setCart(res.cart);
-  //   })
-  //   return () => unsubscribe();
-  // }, [auth.currentUser]);
   const asyncAddToCart=async()=>{
     if(buyAm===0){
       throw "The quantity to be bought must be a number > 0"
@@ -64,20 +56,23 @@ function SingleProductScreen({route}) {
     try{
       const docRef=doc(db,'test-users',auth.currentUser.uid);
       const newCart=addToCart([...cart],product,buyAm);
-      console.log(newCart);
+      // console.log(newCart);
       const res=await updateDoc(docRef,{cart:newCart} );
       return res;
     }catch(err){
       throw err;
     }
   }
-  const updateData=(data)=>{
-    asyncAddToCart(data)
+  const updateData=()=>{
+    setLoading(true);
+    asyncAddToCart()
         .then((res)=>{
             console.log("succesfully added to cart");
             setLocalUserData();
+            setLoading(false);
         })
         .catch((err)=>{
+            setLoading(false);
             alert(err);
         })
   }
@@ -99,10 +94,9 @@ function SingleProductScreen({route}) {
           {product.name}
         </Heading>
 
-        {/* <Rating value={product.rating}  text={`${product.numReviews} reviews`} /> */}
         <Rating value={product.rating}  text={`${product.reviews?.length} review(s)`} />
 
-
+        {product.quantity>0?<Text>{product.quantity} in Stock</Text>:null}
         <HStack space={2} alignItems="center" my={5}>
           {
             product.quantity > 0 ? 
@@ -132,7 +126,6 @@ function SingleProductScreen({route}) {
             )
           }
 
-          {/* <Spacer /> */}
           <Heading bold color={Colors.black} fontSize={19}>
             {product.price}$
           </Heading>
@@ -144,20 +137,12 @@ function SingleProductScreen({route}) {
 
         <Button bg={Colors.main} color={Colors.white} mt={10}
           onPress={()=>{
-            // const ff=async()=>{
-            //   const userData=await getUser(db,'test-users',auth.currentUser.uid).catch((error) => {console.log("getuser: ", error)});;
-            //   const newCart=addToCart([...cart],product);
-            //   const res=await updateUser(db,'test-users',auth.currentUser.uid,{...userData,cart:newCart}).catch((error) => {console.log("updateUser: ", error)});;
-            //   setCart(newCart);
-            // }
-            // ff().catch((error) => {console.log("ff 4: ", error)});;
             updateData();
           }}
-          isDisabled={product.quantity===0}
+          isDisabled={product.quantity===0 || loading}
         >
           ADD TO CART
         </Button>
-        {/* <Review {...product.reviews[0]}/> */}
         <Box my={9}>
         <Heading bold fontSize={15} mb={2}>
           Reviews
@@ -171,7 +156,7 @@ function SingleProductScreen({route}) {
             )
           })}
         </Box>
-        <WriteReview product={product} userData={userData} setLocalUserData={setLocalUserData}/>
+        <WriteReview product={product} userData={userData} setLocalUserData={setLocalUserData} updateProducts={updateProducts}/>
       </ScrollView>
     </Box>
   );

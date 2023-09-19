@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
-function HomeProducts({searchText,setSearchText,products,userData,setLocalUserData}) {
+function HomeProducts({searchText,setSearchText,products,userData,setLocalUserData,updateProducts}) {
   const[displayProducts,setDisplayProducts]=useState([]);
   const navegation=useNavigation();
   useEffect(()=>{
@@ -23,7 +23,7 @@ function HomeProducts({searchText,setSearchText,products,userData,setLocalUserDa
       <Flex flexWrap={'wrap'} direction='row' justifyContent={'space-between'} px={6}>
         {displayProducts.map((product) => {
           return (
-            <Pressable onPress={()=>navegation.navigate("SingleProduct",{product,userData,setLocalUserData} ) } key={product.id} w="47%" bg={Colors.white} rounded={'md'} shadow={2} pt={0.3} my={3} pb={2} overflow={'hidden'} >
+            <Pressable onPress={()=>navegation.navigate("SingleProduct",{product,userData,setLocalUserData,updateProducts} ) } key={product.id} w="47%" bg={Colors.white} rounded={'md'} shadow={2} pt={0.3} my={3} pb={2} overflow={'hidden'} >
               <Image source={{uri:product.image}} alt={product.name} w={'full'} h={24} resizeMode='contain' />
               <Box px={4} pt={1} >
               <Heading size={'sm'}  bold >

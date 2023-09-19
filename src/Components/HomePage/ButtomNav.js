@@ -9,13 +9,15 @@ import {
   FontAwesome5,
   MaterialCommunityIcons
 } from "@expo/vector-icons";
-import { Colors } from "../../data/data";
+import { Colors, appProducts } from "../../data/data";
 import { StyleSheet } from "react-native";
 import ProfileScreen from "../../Screens/ProfileScreen";
 import CartScreen from "../../Screens/CartScreen";
-import { doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
+import Loader from "../Login&SignUp/Loader";
 
+// const productsColRef=collection(db,'products');
 const Tab = createBottomTabNavigator();
 const CusttomTab = ({ children , onPress }) => (
   <Pressable
@@ -34,29 +36,77 @@ const CusttomTab = ({ children , onPress }) => (
 function ButtomNav() {
   const [userData, setUserData] = useState(null);
 
-  const asyncFetchData=async()=>{
-    const docRef = doc(db, 'test-users', auth.currentUser.uid);
-    try{
-      const docSnap = await getDoc(docRef);
-      return docSnap.data();
-    }
-    catch(err){
-      throw err;
-    }
-  }
   const setLocalUserData=()=>{
-    asyncFetchData()
-    .then((res)=>{
-      setUserData(res);
+    const docRef = doc(db, 'test-users', auth.currentUser.uid);
+    getDoc(docRef)
+    .then((docSnap)=>{
+      console.log('succesfully got user data' );
+      setUserData(docSnap.data() );
     })
     .catch((err)=>{
       console.log(err);
-    })
+      throw 'couldnt fetch user data, please try agian later'
+      alert(err);
+    });
   }
   useEffect(() => {
     setLocalUserData();
   }, []);
-  if(!userData) return null;
+
+  const[products,setProducts]=useState([]);
+  // async better since we upload mul products
+  const uploadProducts=async()=>{
+    const colRef=collection(db,'products');
+    try{
+        for(let i=0;i<appProducts.length;i++)
+          await addDoc(colRef,{...appProducts[i] } );
+      }
+      catch(err){
+        throw err+". couldnt upload some products";
+        alert(err);
+      }
+  }
+  // async better since we call function twice
+  const getProducts= async()=>{
+    const colRef=collection(db,'products');
+    try{
+      const snapshot=await getDocs(colRef);
+      if(!snapshot.docs.length )
+        await uploadProducts()
+        .then((res)=>{
+          getProducts();
+        })
+        .catch((err)=>{
+          throw err;
+        });
+      else{
+        let newProducts=[];
+        snapshot.docs.forEach((eachDoc)=>{
+          newProducts.push({...eachDoc.data(),id:eachDoc.id} );
+        })
+        console.log(newProducts.length);
+        setProducts(newProducts);
+      }
+    }
+    catch(err){
+      // throw err;
+      alert(err);
+    }
+  }
+  const updateProducts=(map)=>{
+    const newProducts=[...products];
+    for(let i=0;i<newProducts.length;i++){
+        if(!map.has(newProducts[i].id) ) continue;
+        newProducts[i]={...newProducts[i],...map.get(newProducts[i].id) };
+    }
+    console.log("succ update product")
+    setProducts(newProducts);
+  }
+  useEffect(()=>{
+    getProducts();
+  },[]);
+  
+  if(!userData||!products.length ) return <Loader visible={true} />;
   return (
     <Tab.Navigator
       backBehavior="Main"
@@ -68,20 +118,6 @@ function ButtomNav() {
         showLabel:false,
         tabBarHideOnKeyboard: true,
       }}
-      // screenOptions={{
-      //     headerShown: false,
-      //     tabBarActiveTintColor: '#1a3c43',
-      //     tabBarInactiveTintColor: '#1a3c43',
-      //     tabBarActiveBackgroundColor: 'white',
-      //     tabBarInactiveBackgroundColor: '#1a3c43',
-         
-      //     tabBarHideOnKeyboard: true,
-   
-      //     tabBarstyle: {
-      //         backgroundColor: '#1a3c43',
-      //         paddingBottom: 3
-      //     }
-      // }}
     >
       {/* Home */}
       <Tab.Screen
@@ -99,7 +135,7 @@ function ButtomNav() {
           ),
         }}
       >
-        {()=><HomeScreen userData={userData} setLocalUserData={setLocalUserData} />}
+        {()=><HomeScreen userData={userData} setLocalUserData={setLocalUserData} products={products} setProducts={setProducts} updateProducts={updateProducts}/>}
       </Tab.Screen>
       {/* Cart */}
       <Tab.Screen
@@ -126,7 +162,7 @@ function ButtomNav() {
           ),
         }}
       >
-        {()=><CartScreen userData={userData} setLocalUserData={setLocalUserData}/>}
+        {()=><CartScreen userData={userData} setLocalUserData={setLocalUserData} updateProducts={updateProducts} />}
       </Tab.Screen>
 
       {/* Progile */}

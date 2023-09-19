@@ -47,40 +47,20 @@ function LoginScreen({navigation}) {
   const handleError = (text, input) => {
     setErrors((prevState) => ({ ...prevState, [input]: text }));
   };
-
+  // DO LOGIN WITH PROMISES
   const handleLogin = () => {
     const {email,password}=inputs;
     setLoading(true);
-    const asyncLogin=async()=>{
-      try{
-        const res=await auth.signInWithEmailAndPassword(email, password);
-      }
-      catch(err){
-        // alert(err);
-        throw err;
-      }
-    }
-    asyncLogin()
-      .then((res)=>{
-        console.log("success logg in");
-        setLoading(false);
-        navigation.replace("buttom");
-      })
-      .catch((res)=>{
-        setLoading(false);
-        console.log("fail log in");
-      })
-    // auth.signInWithEmailAndPassword(email, password)
-    // .then((userCredential) => {
-    //   const user = userCredential.user;
-    //   // navigate to somewhere
-    //   navigation.replace("buttom");
-    // })
-    // .catch((error) => {
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    //   alert(errorMessage)
-    // });
+    auth.signInWithEmailAndPassword(email,password)
+    .then((res)=>{
+      console.log('user succesfully logged in');
+      setLoading(false);
+      navigation.replace("buttom");
+    })
+    .catch((res)=>{
+      setLoading(false);
+      alert(res)
+    })
   }
 
   return (
@@ -131,6 +111,7 @@ function LoginScreen({navigation}) {
               // console.log("hello world");
               validate();
             }} childern={"SIGN IN"} mt={5}
+            isDisabled={loading}
           />
           {/* <Buttone
             my={30} rounded={50} bg={Colors.lavender} onPress={GoogleAuth} childern={"SIGN IN With Google"} mt={5}

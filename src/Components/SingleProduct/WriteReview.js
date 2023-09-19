@@ -14,10 +14,12 @@ import { Colors } from "../../data/data";
 import { auth, db } from "../../../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-const WriteReview=({product,userData,setLocalUserData} )=>{
+const WriteReview=({product,userData,setLocalUserData,updateProducts} )=>{
   const[userRate,setUserRate]=useState(1);
   // const[userComment,setUserComment]=useState("The Seraphina Wand is a beautiful and well-made wand, but it's not without its flaws. The wood is smooth and polished, and the core is sturdy and powerful. However, the wand is a bit on the heavy side, and it can be difficult to control for beginners. Additionally, the wand is a bit too flashy for my taste. I prefer a more understated wand")
   const[userComment,setUserComment]=useState();
+  const[loading,setLoading]=useState(false);
+
   const productId=product.id;
 
   const possibleRates=['1 - Poor', '2 - Fair', '3 - Average', '4 - Good', '5 - Excellent'];
@@ -35,6 +37,7 @@ const WriteReview=({product,userData,setLocalUserData} )=>{
     return formattedDate;
   }
   const onSubmit=()=>{
+    setLoading(true);
     const rating=userRate;
     const text=userComment;
     const userId=auth.currentUser.uid;
@@ -43,14 +46,21 @@ const WriteReview=({product,userData,setLocalUserData} )=>{
     const docRef=doc(db,'products',productId);
 
     // need to update products in homescreen
-    updateDoc(docRef,{reviews:[...product.reviews, {
+    const obj={reviews:[...product.reviews, {
       rating,text,userId,reviewerName,date
-    }]})
+    }]};
+    updateDoc(docRef,obj)
       .then(res=>{
         console.log('uploaded review succesfully')
+        alert("added review refresh to see it");
+        const map=new Map();
+        map.set(productId,obj);
+        updateProducts(map);
+        setLoading(false);
       })
       .catch(res=>{
         alert(res);
+        setLoading(false);
       })
   }
     return (
@@ -113,7 +123,7 @@ const WriteReview=({product,userData,setLocalUserData} )=>{
               value={userComment}
             />
           </FormControl>
-          <Buttone mb={6} mt={0} bg={Colors.main} color={Colors.white} childern={"Submit"} onPress={()=>onSubmit()}/>
+          <Buttone mb={6} mt={0} bg={Colors.main} color={Colors.white} childern={"Submit"} onPress={()=>onSubmit()} isDisabled={loading}/>
         </VStack>
       </Box>
     )

@@ -73,37 +73,18 @@ import { doc, setDoc } from 'firebase/firestore';
     if (isValid)
       register();
   };
-  
-  
+  // DO REGISTER WITH PROMISES
+  // FOR SAKE OF DIVERSITY
+
   const register = async() => {
     // console.log(inputs)
     const {email,password}=inputs;
     setLoading(true);
-    // const asyncRegister=async()=>{
-    //     try{
-    //       const res=await auth.createUserWithEmailAndPassword(email,password);
-    //       return res;
-    //     }
-    //     catch(err){
-    //       // alert(err);
-    //       setLoading(false);
-    //       throw err;
-    //     }
-    // }
-    // asyncRegister()
-    //   .then((res)=>{
-    //     setLoading(false);
-    //     console.log("success register");
-    //     navigation.navigate("buttom");
-    //   })
-    //   .catch((res)=>{
-    //     setLoading(false);
-    //     console.log("fail register");
-    //     console.log(res);
-    //   })
 
     auth.createUserWithEmailAndPassword(email,password)
     .then((res)=>{
+      console.log("created new user succesfully");
+
       const docRef=doc(db,'test-users',auth.currentUser.uid);
       let newData={...inputs};
 
@@ -114,16 +95,24 @@ import { doc, setDoc } from 'firebase/firestore';
       newData.credit=5000;
       newData.cart=[];
       newData.orders=[];
-
+      
       setDoc(docRef,newData)
         .then(res=>{
           setLoading(false);
-          console.log('succesfully added new user');
+          console.log('succesfully wrote new user data to firestore');
           navigation.navigate("buttom");
         })
         .catch(res=>{
           setLoading(false);
-          alert(res)        
+          auth.currentUser.delete()
+            .then((res)=>{
+              console.log('succesfully deleted user after failing to write his data to firestore');
+              alert('could not sign up user, please try again later');
+            })
+            .catch((err)=>{
+              console.log(err);
+              throw "user was not deleted after failing to write his data to firestore cannot recover from this";
+            })
         })
     })
     .catch((res)=>{
@@ -140,6 +129,7 @@ import { doc, setDoc } from 'firebase/firestore';
   const handleError = (text, input) => {
     setErrors((prevState) => ({ ...prevState, [input]: text }));
   };
+
   const inputsArray = [
     {
       label: "First Name",
@@ -248,7 +238,7 @@ import { doc, setDoc } from 'firebase/firestore';
       
       </VStack>
       </ScrollView>
-      <Buttone my={30} w="10%" rounded={50} bg={Colors.white} onPress={validate} childern={"SIGN UP"} mt={5} />
+      <Buttone my={30} w="10%" rounded={50} bg={Colors.white} onPress={validate} childern={"SIGN UP"} mt={5} isDisabled={loading}/>
       <Pressable mt={4} onPress={()=>{navigation.navigate('Login');}} >
         <Text color={Colors.lavender}>LOG IN</Text>
       </Pressable>
