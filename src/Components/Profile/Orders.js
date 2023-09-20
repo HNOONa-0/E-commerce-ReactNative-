@@ -15,7 +15,9 @@ const Orders = ({userData,setlocalUserData}) => {
                     let price=0;
                     for(let i=0;i<cart.length;i++) price+=cart[i].quantity*cart[i].price;
                     return(
-                        <Pressable>
+                        <Pressable
+                            key={i}
+                        >
                             {/* color and size of text field */}
                             <HStack space={4} justifyContent="space-between" 
                             alignItems={"center"} bg={Colors.deepGray}

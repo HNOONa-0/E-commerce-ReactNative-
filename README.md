@@ -1,6 +1,6 @@
 Original repo:[link](https://github.com/HassanAhmed2512/E-commerce-ReactNative-)
 
-I reworked most components as they were bugy and didn't reflect state, fixed faulty firebase api(s) that i originally coded. It's not ready to deploy, a lot of react components rerender needlesly, easy fix is to use Memo. But firebase api(s) work well.
+I reworked most components as they were bugy and didn't reflect state, fixed faulty firebase api calls that i originally coded. It's not ready to deploy, a lot of react components rerender needlesly, easy fix is to use Memo. But firebase api calls work well.
 Deploying soon!
 
 Here are some screens of the app:

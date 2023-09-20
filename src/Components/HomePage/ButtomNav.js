@@ -134,6 +134,14 @@ function ButtomNav() {
             </Center>
           ),
         }}
+        // listeners={{
+        //   tabPress: e => {
+        //     // Prevent default action
+        //     e.preventDefault();
+        //     //Any custom code here
+        //     alert(123);
+        //   },
+        // }}
       >
         {()=><HomeScreen userData={userData} setLocalUserData={setLocalUserData} products={products} setProducts={setProducts} updateProducts={updateProducts}/>}
       </Tab.Screen>
